@@ -530,94 +530,22 @@
           // A box only counts as done once both stages are correct; a
           // wrong pair-count answer keeps the circle step locked and shows
           // the retry button, same as a wrong circle choice would.
+          // Submission accepts any visible handwriting in each count box.
+          // Matching and circling remain optional practice; no numeral recognition.
           validate: function () {
-            var allDone = true
-            var anyWrong = false
-
-            boxCtrls.forEach(function (ctrl) {
-              var links = ctrl.getLinks()
-              var hint = ctrl.box.querySelector('[data-match-hint]')
-              var smallerCount = Math.min(ctrl.leftCount, ctrl.rightCount)
-              var connectedCount = 0
-
-              ctrl.items.forEach(function (item) {
-                var connected = !!links[item.dataset.matchId]
-                if (connected) connectedCount++
-                // Every item on the smaller side must be connected; the
-                // larger side always has an unmatched leftover by design, so
-                // only flag an item wrong if it SHOULD be connectable but
-                // isn't (i.e. it's on the smaller side) — an unconnected
-                // larger-side item is expected, not an error.
-                var side = item.dataset.matchSide === 'left' ? ctrl.leftCount : ctrl.rightCount
-                var isSmallerSide = side === smallerCount
-                if (isSmallerSide) setFeedback(item.querySelector('.activity-feedback-icon'), connected)
-                else clearFeedback(item.querySelector('.activity-feedback-icon'))
-              })
-
-              var pairsOk = connectedCount === smallerCount * 2
-              // Handwriting is learner/teacher reviewed, not recognized as a numeric answer.
-              var moreAnswered = !!ctrl.moreInput && Number(ctrl.moreInput.dataset.handwritingLength || 0) >= 30
-              var moreOk = moreAnswered
-              if (ctrl.moreFeedback) {
-                clearFeedback(ctrl.moreFeedback)
-              }
-
-              if (!moreAnswered) { allDone = false; return }
-              if (!ctrl.isPairCountConfirmed()) {
-                // Stage 1: matching + pair count. A wrong (non-empty) count
-                // answer is a real mistake; missing matches/answer with
-                // nothing entered yet is just "not finished", not wrong.
-                if (moreAnswered && !moreOk) anyWrong = true
-                if (!pairsOk) {
-                  allDone = false
-                  if (hint) hint.textContent = 'இணைக்கக்கூடிய எல்லா உருவங்களையும் இணையுங்கள்.'
-                  return
-                }
-                if (!moreOk) {
-                  allDone = false
-                  if (hint) hint.textContent = 'இணைத்த சோடிகளின் எண்ணிக்கையைச் சரியாக எழுதுங்கள்.'
-                  return
-                }
-                ctrl.confirmPairCount()
-                if (!ctrl.requiresCircle) {
-                  // This box's task ends at the pair count — no circle step.
-                  if (hint) hint.textContent = ''
-                  return
-                }
-                allDone = false
-                if (hint) hint.textContent = 'சரி! இப்போது கூடுதலாக உள்ள குவியலைச் சுற்றி வட்டம் வரையுங்கள்.'
-                return
-              }
-
-              if (!ctrl.requiresCircle) return // already satisfied above
-
-              // Stage 2: circle the bigger group.
-              var circledSide = ctrl.getCircledSide()
-              var circleOk = circledSide === ctrl.correctMoreSide
-              ctrl.groups.forEach(function (g) {
-                if (circledSide !== g.dataset.groupSide) return
-                g.style.outline = circleOk ? '' : '3px dashed #dc2626'
-              })
-              if (!circleOk) {
-                allDone = false
-                if (hint) hint.textContent = 'கூடுதலாக உள்ள குவியலைச் சுற்றி வட்டம் வரையுங்கள்.'
-                if (circledSide) anyWrong = true // picked, just the wrong side
-              } else if (hint) {
-                hint.textContent = ''
-              }
-            })
-
+            var complete = boxCtrls.every(function (ctrl) {
+              var canvas = ctrl.moreInput;
+              if (!canvas) return false;
+              var pixels = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+              for (var i = 3; i < pixels.length; i += 4) if (pixels[i] > 0) return true;
+              return false;
+            });
             if (pageStatus) {
-              if (allDone) {
-                pageStatus.textContent = 'பயிற்சி நிறைவடைந்தது. எழுதிய எண்ணை ஆசிரியருடன் சரிபார்க்கவும்.'
-                pageStatus.style.color = '#15803d'
-              } else {
-                pageStatus.textContent = 'மீண்டும் முயற்சி செய்யுங்கள்.'
-                pageStatus.style.color = '#b91c1c'
-              }
+              pageStatus.textContent = complete ? 'எழுதிய விடைகள் சமர்ப்பிக்கப்பட்டன.' : 'இரண்டு பெட்டிகளிலும் எண்ணை எழுதுங்கள்.';
+              pageStatus.style.color = complete ? '#15803d' : '#b91c1c';
             }
-            if (retryButton) retryButton.classList.toggle('hidden', !anyWrong)
-            return allDone
+            if (retryButton) retryButton.classList.add('hidden');
+            return complete;
           },
           reset: resetActivity,
         })
