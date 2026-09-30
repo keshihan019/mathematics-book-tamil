@@ -54,19 +54,19 @@
       <div class="space-y-3">
         <p class="adt-body leading-relaxed text-gray-900" data-id="pg014_n0007">&#xb87;&#xbb0;&#xba3;&#xbcd;&#xb9f;&#xbc1; &#xb95;&#xbc1;&#xbb5;&#xbb3;&#xbc8;&#xb95;&#xbb3;&#xbbf;&#xbb2;&#xbc1;&#xbae;&#xbcd; &#xb9a;&#xbae; &#xb85;&#xbb3;&#xbb5;&#xbc1;&#xb95;&#xbb3;&#xbbf;&#xbb2;&#xbcd; &#xbaa;&#xbbe;&#xba9;&#xbae;&#xbcd; &#xb87;&#xbb0;&#xbc1;&#xb95;&#xbcd;&#xb95;&#xbbf;&#xba9;&#xbcd;&#xbb1;&#xba4;&#xbc1;.</p>
         <p class="adt-body leading-relaxed text-gray-900" data-id="pg014_n0008">&#xb87;&#xbb5;&#xbb1;&#xbcd;&#xbb1;&#xbc1;&#xb95;&#xbcd;&#xb95;&#xbc1; &#xba8;&#xbbf;&#xbb1;&#xbae;&#xbcd; &#xba4;&#xbc0;&#xb9f;&#xbcd;&#xb9f;&#xbc1;&#xbb5;&#xbcb;&#xbae;&#xbcd;.</p>
-        <div id="pg014-color-round" class="cmp-round">
+        <div id="pg014-color-round" class="cmp-round" data-cup-colouring>
           <div class="cmp-row">
             <div class="paint-item">
               <span class="paint-visual">
                 <img data-id="pg014_im002" src="images/pg014_im002.png" alt="&#xbae;&#xbc1;&#xba4;&#xbb2;&#xbbe;&#xbb5;&#xba4;&#xbc1; &#xb95;&#xbc1;&#xbb5;&#xbb3;&#xbc8;" class="paint-photo" style="max-width: 100%; height: auto;">
-                <canvas class="paint-canvas" data-glass="glass-1" tabindex="0" aria-label="&#xbae;&#xbc1;&#xba4;&#xbb2;&#xbbe;&#xbb5;&#xba4;&#xbc1; &#xb95;&#xbc1;&#xbb5;&#xbb3;&#xbc8;&#xb95;&#xbcd;&#xb95;&#xbc1; &#xba8;&#xbbf;&#xbb1;&#xbae;&#xbcd; &#xba4;&#xbc0;&#xb9f;&#xbcd;&#xb9f;&#xbc1;&#xb99;&#xbcd;&#xb95;&#xbb3;&#xbcd;"></canvas>
+                <canvas class="paint-canvas" data-glass="glass-1" tabindex="0" aria-label="&#xbae;&#xbc1;&#xba4;&#xbb2;&#xbbe;&#xbb5;&#xba4;&#xbc1; &#xb95;&#xbc1;&#xbb5;&#xbb3;&#xbc8;&#xb95;&#xbcd;&#xb95;&#xbc1; &#xba8;&#xbbf;&#xbb1;&#xbae;&#xbcd; &#xba4;&#xbc0;&#xb9f;&#xbcd;&#xb9f;&#xbc1;&#xb99;&#xbcd;&#xb95;&#xbb3;&#xbcd;" data-paint-viewbox="321 430" data-paint-interior="M 62 112 Q 159 156 251 112 L 231 377 Q 159 416 86 377 Z" data-paint-fill-y="179"></canvas>
               </span>
               <span class="activity-feedback-icon" data-id="text-pg014-50" aria-hidden="true"></span>
             </div>
             <div class="paint-item">
               <span class="paint-visual">
                 <img data-id="pg014_im004" src="images/pg014_im004.png" alt="&#xb87;&#xbb0;&#xba3;&#xbcd;&#xb9f;&#xbbe;&#xbb5;&#xba4;&#xbc1; &#xb95;&#xbc1;&#xbb5;&#xbb3;&#xbc8;" class="paint-photo" style="max-width: 100%; height: auto;">
-                <canvas class="paint-canvas" data-glass="glass-2" tabindex="0" aria-label="&#xb87;&#xbb0;&#xba3;&#xbcd;&#xb9f;&#xbbe;&#xbb5;&#xba4;&#xbc1; &#xb95;&#xbc1;&#xbb5;&#xbb3;&#xbc8;&#xb95;&#xbcd;&#xb95;&#xbc1; &#xba8;&#xbbf;&#xbb1;&#xbae;&#xbcd; &#xba4;&#xbc0;&#xb9f;&#xbcd;&#xb9f;&#xbc1;&#xb99;&#xbcd;&#xb95;&#xbb3;&#xbcd;"></canvas>
+                <canvas class="paint-canvas" data-glass="glass-2" tabindex="0" aria-label="&#xb87;&#xbb0;&#xba3;&#xbcd;&#xb9f;&#xbbe;&#xbb5;&#xba4;&#xbc1; &#xb95;&#xbc1;&#xbb5;&#xbb3;&#xbc8;&#xb95;&#xbcd;&#xb95;&#xbc1; &#xba8;&#xbbf;&#xbb1;&#xbae;&#xbcd; &#xba4;&#xbc0;&#xb9f;&#xbcd;&#xb9f;&#xbc1;&#xb99;&#xbcd;&#xb95;&#xbb3;&#xbcd;" data-paint-viewbox="321 472" data-paint-interior="M 62 112 Q 159 156 251 112 L 231 377 Q 159 416 86 377 Z" data-paint-fill-y="179"></canvas>
               </span>
               <span class="activity-feedback-icon" data-id="text-pg014-51" aria-hidden="true"></span>
             </div>
@@ -79,7 +79,86 @@
             <button type="button" class="paint-swatch" data-paint-color="#ec4899" style="background:#ec4899;" aria-label="&#xb87;&#xbb3;&#xb9e;&#xbcd;&#xb9a;&#xbbf;&#xbb5;&#xbaa;&#xbcd;&#xbaa;&#xbc1;" aria-pressed="false"></button>
           </div>
           <p class="paint-status" data-paint-status data-id="text-pg014-52"></p>
-        </div>
+        <script>(function () {
+  var initialized = new WeakSet();
+  function initialize() {
+    document.querySelectorAll('[data-cup-colouring]').forEach(function (section) {
+      if (initialized.has(section)) return;
+      initialized.add(section);
+      var swatches = Array.from(section.querySelectorAll('.paint-swatch'));
+      swatches.forEach(function (swatch) {
+        swatch.addEventListener('click', function () {
+          if (document.body.dataset.linkMode === 'true') return;
+          swatches.forEach(function (button) { button.classList.toggle('is-active', button === swatch); button.setAttribute('aria-pressed', String(button === swatch)); });
+        });
+      });
+      section.querySelectorAll('canvas[data-paint-interior]').forEach(function (canvas) {
+        var ctx = canvas.getContext('2d');
+        var item = canvas.closest('.paint-item');
+        var img = item && item.querySelector('.paint-photo');
+        var dimensions = (canvas.dataset.paintViewbox || '').split(' ').map(Number);
+        if (!ctx || !img || dimensions.length !== 2 || !dimensions.every(function (v) { return v > 0; })) return;
+        var interior = new Path2D(canvas.dataset.paintInterior);
+        var pointer = null, last = null;
+        function blocked() { return document.body.dataset.linkMode === 'true'; }
+        function fit() {
+          if (!img.naturalWidth) return;
+          if (canvas.width !== img.naturalWidth) canvas.width = img.naturalWidth;
+          if (canvas.height !== img.naturalHeight) canvas.height = img.naturalHeight;
+        }
+        fit(); img.addEventListener('load', fit);
+        function path() {
+          var scaled = new Path2D();
+          scaled.addPath(interior, new DOMMatrix().scale(canvas.width / dimensions[0], canvas.height / dimensions[1]));
+          return scaled;
+        }
+        function position(event) {
+          var rect = canvas.getBoundingClientRect();
+          return {x:(event.clientX-rect.left)*canvas.width/rect.width, y:(event.clientY-rect.top)*canvas.height/rect.height};
+        }
+        function color() {
+          var active = swatches.find(function (button) { return button.classList.contains('is-active'); }) || swatches[0];
+          return active ? active.dataset.paintColor : '#eab308';
+        }
+        function stroke(point) {
+          var boundary = path();
+          if (!ctx.isPointInPath(boundary, point.x, point.y)) { last = null; return; }
+          ctx.save(); ctx.clip(boundary);
+          ctx.strokeStyle = color(); ctx.fillStyle = color(); ctx.lineWidth = 16; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+          ctx.beginPath();
+          if (last) { ctx.moveTo(last.x,last.y); ctx.lineTo(point.x,point.y); ctx.stroke(); }
+          ctx.beginPath(); ctx.arc(point.x,point.y,8,0,Math.PI*2); ctx.fill();
+          ctx.restore(); last = point; item.dataset.painted = 'true';
+        }
+        canvas.addEventListener('pointerdown', function (event) {
+          if (blocked() || event.button !== 0 || pointer !== null || !ctx.isPointInPath(path(), position(event).x, position(event).y)) return;
+          pointer = event.pointerId; last = null;
+          canvas.setPointerCapture(pointer); event.preventDefault(); stroke(position(event));
+        });
+        canvas.addEventListener('pointermove', function (event) {
+          var point = position(event);
+          canvas.style.cursor = ctx.isPointInPath(path(),point.x,point.y) ? 'crosshair' : 'not-allowed';
+          if (blocked()) { last = null; return; }
+          if (pointer === event.pointerId) { event.preventDefault(); stroke(point); }
+        });
+        function stop() { pointer = null; last = null; }
+        canvas.addEventListener('pointerup', stop);
+        canvas.addEventListener('pointercancel', stop);
+        canvas.addEventListener('lostpointercapture', stop);
+        canvas.addEventListener('keydown', function (event) {
+          if (blocked() || (event.key !== 'Enter' && event.key !== ' ')) return;
+          event.preventDefault();
+          var y = Number(canvas.dataset.paintFillY) * canvas.height / dimensions[1];
+          if (!Number.isFinite(y)) return;
+          ctx.save(); ctx.clip(path()); ctx.fillStyle = color(); ctx.fillRect(0,y,canvas.width,canvas.height-y); ctx.restore();
+          item.dataset.painted = 'true';
+        });
+      });
+    });
+  }
+  new MutationObserver(initialize).observe(document.body,{childList:true,subtree:true});
+  initialize();
+})();</script></div>
       </div>
 
       <div class="space-y-3">
@@ -177,6 +256,250 @@
 
   </section>
 </div>
+<script>
+      (function () {
+        var section = document.getElementById('pg014-compare')
+        if (!section || section.dataset.adtInitialized === 'true') return
+        section.dataset.adtInitialized = 'true'
+
+        var pageStatus = section.querySelector('[data-page-status]')
+        var retryButton = section.querySelector('[data-retry-button]')
+
+        function resetActivity() {
+          cmpRounds.forEach(function (round) {
+            delete round.dataset.value
+            Array.from(round.querySelectorAll('.cmp-item')).forEach(function (item) {
+              item.classList.remove('is-selected')
+              item.setAttribute('aria-checked', 'false')
+              clearFeedback(item.querySelector('.activity-feedback-icon'))
+            })
+            var statusEl = round.querySelector('[data-cmp-status]')
+            if (statusEl) { statusEl.textContent = ''; statusEl.style.color = '' }
+          })
+          glassPaintItems.forEach(function (item) {
+            delete item.dataset.painted
+            delete item.dataset.fillOk
+            clearFeedback(item.querySelector('.activity-feedback-icon'))
+            var canvas = item.querySelector('.paint-canvas')
+            if (canvas) {
+              var ctx = canvas.getContext('2d')
+              ctx.clearRect(0, 0, canvas.width, canvas.height)
+            }
+          })
+          if (pageStatus) { pageStatus.textContent = ''; pageStatus.style.color = '' }
+          if (retryButton) retryButton.classList.add('hidden')
+        }
+
+        function setFeedback(el, ok) {
+          el.classList.remove('show-correct', 'show-incorrect')
+          el.classList.add(ok ? 'show-correct' : 'show-incorrect')
+          el.innerHTML = ok
+            ? '<i class="fas fa-check-circle" aria-hidden="true"></i>'
+            : '<i class="fas fa-times-circle" aria-hidden="true"></i>'
+          el.setAttribute('aria-label', ok ? 'சரி' : 'தவறு')
+        }
+        function clearFeedback(el) {
+          el.classList.remove('show-correct', 'show-incorrect')
+          el.innerHTML = ''
+          el.removeAttribute('aria-label')
+        }
+
+        // ---- Compare rounds (pick the correct picture: less / more) ----
+        var cmpRounds = Array.from(section.querySelectorAll('.cmp-round[data-round]'))
+        cmpRounds.forEach(function (round) {
+          var items = Array.from(round.querySelectorAll('.cmp-item'))
+          var choose = function (item) {
+            items.forEach(function (other) {
+              other.classList.remove('is-selected')
+              other.setAttribute('aria-checked', 'false')
+              clearFeedback(other.querySelector('.activity-feedback-icon'))
+            })
+            item.classList.add('is-selected')
+            item.setAttribute('aria-checked', 'true')
+            round.dataset.value = item.dataset.activityItem
+            var statusEl = round.querySelector('[data-cmp-status]')
+            if (statusEl) { statusEl.textContent = ''; statusEl.style.color = '' }
+          }
+          items.forEach(function (item) {
+            item.addEventListener('click', function () { choose(item) })
+            item.addEventListener('keydown', function (e) {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                choose(item)
+              }
+            })
+          })
+        })
+
+        function cmpRoundState(round) {
+          return { round: round, value: round.dataset.value, answer: round.dataset.answer }
+        }
+
+        // ---- Coloring round (both glasses, equal amount) ----
+        var colorRound = section.querySelector('#pg014-color-round')
+        var glassPaintItems = colorRound ? Array.from(colorRound.querySelectorAll('.paint-item')) : []
+        var currentPaintColor = '#eab308'
+
+        function fitCanvas(item) {
+          var img = item.querySelector('.paint-photo')
+          var canvas = item.querySelector('.paint-canvas')
+          if (!img || !canvas) return
+          var setSize = function () {
+            var w = img.naturalWidth || 321
+            var h = img.naturalHeight || 438
+            if (canvas.width !== w || canvas.height !== h) {
+              canvas.width = w
+              canvas.height = h
+            }
+          }
+          if (img.complete && img.naturalWidth) setSize()
+          else img.addEventListener('load', setSize, { once: true })
+          window.addEventListener('resize', setSize)
+        }
+
+        glassPaintItems.forEach(fitCanvas)
+
+
+        // The glass artwork has a dashed fill-line drawn into the source image
+        // itself (not a DOM element), so "correct" coloring is verified by
+        // sampling the canvas pixels against that line's measured position:
+        // pg014_im002/pg014_im004 are 261x382 source images where the dashed
+        // line sits at y=144px (37.7% down), the rim is at y=44px (11.5%),
+        // and the glass base is at y=348px (91.1%) — measured directly from
+        // the source PNGs. Both glasses use the same artwork, so one set of
+        // fractions covers both.
+        var GLASS_LINE_Y = 179
+        var GLASS_RIM_Y = 55
+        var GLASS_BASE_Y = 397
+        var GLASS_MARGIN_X = 0.25 // sample the central band, skip outline edges
+
+        function checkGlassFill(item) {
+          var canvas = item.querySelector('.paint-canvas')
+          if (!canvas || !canvas.width || !canvas.height) return false
+          var ctx = canvas.getContext('2d')
+          var w = canvas.width
+          var h = canvas.height
+          var x0 = Math.round(w * GLASS_MARGIN_X)
+          var x1 = Math.round(w * (1 - GLASS_MARGIN_X))
+          var yLine = GLASS_LINE_Y
+          var yRim = GLASS_RIM_Y
+          var yBase = GLASS_BASE_Y
+
+          function coverage(yStart, yEnd) {
+            if (yEnd <= yStart || x1 <= x0) return 0
+            var data = ctx.getImageData(x0, yStart, x1 - x0, yEnd - yStart).data
+            var painted = 0
+            var total = 0
+            for (var i = 3; i < data.length; i += 4) {
+              total++
+              if (data[i] > 40) painted++
+            }
+            return total > 0 ? painted / total : 0
+          }
+
+          var belowLine = coverage(yLine, yBase) // must be filled up to the mark
+          var aboveLine = coverage(yRim, yLine) // must stay empty above the mark
+          return belowLine >= 0.6 && aboveLine <= 0.25
+        }
+
+        if (colorRound) {
+          var swatches = Array.from(colorRound.querySelectorAll('.paint-swatch'))
+          swatches.forEach(function (swatch) {
+            swatch.addEventListener('click', function () {
+              currentPaintColor = swatch.dataset.paintColor
+              swatches.forEach(function (s) { s.classList.remove('is-active'); s.setAttribute('aria-pressed', 'false') })
+              swatch.classList.add('is-active'); swatch.setAttribute('aria-pressed', 'true')
+            })
+          })
+        }
+
+        var registerActivity = function (handlers) {
+          if (typeof window.adtRegisterCustomActivity === 'function') {
+            window.adtRegisterCustomActivity(section, handlers)
+            return
+          }
+          var attempts = 0
+          var timer = setInterval(function () {
+            attempts++
+            if (typeof window.adtRegisterCustomActivity === 'function') {
+              clearInterval(timer)
+              window.adtRegisterCustomActivity(section, handlers)
+            } else if (attempts >= 20) {
+              clearInterval(timer)
+            }
+          }, 100)
+        }
+
+        registerActivity({
+          validate: function () {
+            var allDone = true
+            var messages = []
+
+            // Coloring: both glasses must be filled up to (and not much past)
+            // the dashed mark line printed in the artwork, not just touched
+            // with any stroke. Give each glass its own correct/wrong badge,
+            // same as every other part of this activity.
+            glassPaintItems.forEach(function (item) {
+              item.dataset.fillOk = checkGlassFill(item) ? 'true' : 'false'
+              setFeedback(item.querySelector('.activity-feedback-icon'), item.dataset.fillOk === 'true')
+            })
+            var bothPainted = glassPaintItems.length > 0 && glassPaintItems.every(function (item) { return item.dataset.fillOk === 'true' })
+            if (!bothPainted) {
+              allDone = false
+              messages.push('இரண்டு குவளைகளிலும் குறிக்கப்பட்ட கோடு வரை நிறம் தீட்டுங்கள்.')
+            }
+
+            // Each compare round: must be picked, and must match the correct answer.
+            cmpRounds.forEach(function (round) {
+              var state = cmpRoundState(round)
+              var statusEl = round.querySelector('[data-cmp-status]')
+              var items = Array.from(round.querySelectorAll('.cmp-item'))
+              if (!state.value) {
+                allDone = false
+                if (statusEl) { statusEl.textContent = 'ஓர் உருவத்தைத் தெரிவு செய்யுங்கள்.'; statusEl.style.color = '#b91c1c' }
+                return
+              }
+              var chosenItem = items.find(function (i) { return i.dataset.activityItem === state.value })
+              var ok = state.value === state.answer
+              if (chosenItem) setFeedback(chosenItem.querySelector('.activity-feedback-icon'), ok)
+              if (!ok) {
+                allDone = false
+                if (statusEl) { statusEl.textContent = 'மீண்டும் முயற்சி செய்யுங்கள்.'; statusEl.style.color = '#b91c1c' }
+              } else if (statusEl) {
+                statusEl.textContent = 'சரி!'
+                statusEl.style.color = '#15803d'
+              }
+            })
+
+            if (pageStatus) {
+              if (allDone) {
+                pageStatus.textContent = 'சரி! எல்லாச் செயற்பாடுகளும் நிறைவடைந்தன.'
+                pageStatus.style.color = '#15803d'
+              } else {
+                pageStatus.textContent = messages.join(' ') || 'மீண்டும் முயற்சி செய்யுங்கள்.'
+                pageStatus.style.color = '#b91c1c'
+              }
+            }
+            // The runtime has no built-in redo/reset UI for custom activities
+            // (only the Submit button, which just re-validates in place) — so
+            // a visible "try again" affordance has to be built into the
+            // section itself. Only offer it once the learner has actually
+            // gotten something wrong; a first-time "no answer yet" state
+            // doesn't need it.
+            if (retryButton) retryButton.classList.toggle('hidden', allDone)
+            return allDone
+          },
+          reset: resetActivity,
+        })
+
+        if (retryButton) {
+          retryButton.addEventListener('click', function () {
+            resetActivity()
+            retryButton.classList.add('hidden')
+          })
+        }
+      })()
+    </script>
     </main>
 
     <div class="relative z-50" id="interface-container"></div>

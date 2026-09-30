@@ -24,6 +24,22 @@
 <p data-status role="status" aria-live="polite" class="min-h-8 font-bold"></p>
 
 </section>
+<script>
+(function(){
+const section=document.getElementById('pg010-mango-cards');if(!section||section.dataset.initialized)return;section.dataset.initialized='true';
+const cards=Array.from(section.querySelectorAll('[data-activity-item]'));const status=section.querySelector('[data-status]');let selected=null;
+function clear(){cards.forEach(c=>{c.setAttribute('aria-pressed','false');c.classList.remove('ring-4','ring-sky-500');});selected=null;}
+function clearFeedback(){cards.forEach(c=>{c.querySelector('[data-feedback]').textContent='';c.removeAttribute('aria-invalid');});}
+function select(card){clear();selected=card;card.setAttribute('aria-pressed','true');card.classList.add('ring-4','ring-sky-500');status.textContent='மாம்பழம் தெரிவு செய்யப்பட்டுள்ளது. பொருத்தமான கூடையைத் தொடுங்கள்.';}
+function move(zone){if(!selected){status.textContent='முதலில் ஒரு மாம்பழத்தைத் தெரிவு செய்யுங்கள்.';return;}const list=section.querySelector('[data-items="'+zone+'"]');if(!list)return;list.appendChild(selected);clear();clearFeedback();status.textContent='மாம்பழம் வைக்கப்பட்டுள்ளது.';}
+cards.forEach(card=>{card.addEventListener('click',()=>{if(selected===card){clear();status.textContent='';}else select(card);});card.addEventListener('dragstart',event=>{select(card);if(event.dataTransfer){event.dataTransfer.setData('text/plain',card.dataset.activityItem);event.dataTransfer.effectAllowed='move';}});card.addEventListener('dragend',clear);});
+section.querySelectorAll('[data-place]').forEach(button=>button.addEventListener('click',()=>move(button.dataset.place)));
+section.querySelectorAll('[data-zone]').forEach(zone=>{zone.addEventListener('dragover',event=>{if(selected){event.preventDefault();if(event.dataTransfer)event.dataTransfer.dropEffect='move';}});zone.addEventListener('drop',event=>{event.preventDefault();move(zone.dataset.zone);});});
+const handlers={validate:function(){clear();let correct=0;cards.forEach(card=>{const ok=card.parentElement.dataset.items===card.dataset.size;if(ok)correct++;card.querySelector('[data-feedback]').textContent=ok?'✓':'✗';card.setAttribute('aria-invalid',String(!ok));});const passed=correct===cards.length;status.textContent=passed?'அருமை! எல்லா மாம்பழங்களையும் சரியான கூடைகளில் சேர்த்துள்ளீர்கள்.':'மீண்டும் முயற்சி செய்யுங்கள். ஐந்து மாம்பழங்களையும் அவற்றின் பருமனுக்கு ஏற்ப சரியான கூடைகளில் வையுங்கள்.';return passed;},reset:function(){clear();clearFeedback();const bank=section.querySelector('[data-items="bank"]');cards.forEach(card=>bank.appendChild(card));status.textContent='';}};
+// Register exclusively with the shared ADT submit control, including deferred runtime startup.
+if(typeof window.adtRegisterCustomActivity==='function')window.adtRegisterCustomActivity(section,handlers);else(window.__adtPendingCustomActivities=window.__adtPendingCustomActivities||[]).push({section,handlers});
+})();
+</script>
       </div>
     </main>
 

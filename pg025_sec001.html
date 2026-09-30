@@ -30,6 +30,17 @@
     </div>
   <p data-colour-status class="mt-4 min-h-8 font-bold" role="status" aria-live="polite"></p><style>#pg025-colouring [data-flag]:focus-visible { outline:none; stroke:#0369a1; stroke-width:2; } #pg025-colouring [data-flag]:hover { stroke:#0369a1; stroke-width:1; }</style></section>
 </div>
+<script>(()=>{
+const section=document.getElementById('pg025-colouring');if(!section||section.dataset.ready)return;section.dataset.ready='true';
+const swatches=[...section.querySelectorAll('[data-colour]')],flags=[...section.querySelectorAll('[data-flag]')],erase=section.querySelector('[data-erase]'),status=section.querySelector('[data-colour-status]');let selected=swatches[0].dataset.colour;const filled=flags.map(()=>null);
+function select(colour){selected=colour;swatches.forEach(b=>{const yes=b.dataset.colour===colour;b.setAttribute('aria-pressed',String(yes));b.textContent=yes?'✓':'';b.style.outline=yes?'3px solid #0f172a':'';b.style.outlineOffset='3px';});erase.setAttribute('aria-pressed',String(colour===null));erase.style.backgroundColor=colour===null?'#e0f2fe':'';}
+swatches.forEach(b=>b.addEventListener('click',()=>select(b.dataset.colour)));erase.addEventListener('click',()=>select(null));
+function paint(flag){const i=Number(flag.dataset.flag);filled[i]=selected;flag.setAttribute('fill',selected||'transparent');flag.setAttribute('aria-label','கொடி '+(i+1)+(selected?' — '+swatches.find(b=>b.dataset.colour===selected).getAttribute('aria-label'):' — நிறம் தீட்டப்படவில்லை'));status.textContent='';}
+flags.forEach(flag=>{flag.addEventListener('click',()=>paint(flag));flag.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();paint(flag);}});});
+function reset(){filled.fill(null);flags.forEach((f,i)=>{f.setAttribute('fill','transparent');f.setAttribute('aria-label','கொடி '+(i+1));});status.textContent='';select(swatches[0].dataset.colour);}
+section.querySelector('[data-reset]').addEventListener('click',reset);select(selected);
+window.adtRegisterCustomActivity(section,{reset,validate(){const complete=filled.every(Boolean);status.textContent=complete?'✓ எல்லாக் கொடிகளுக்கும் நிறம் தீட்டிவிட்டீர்கள்!':'எல்லாக் கொடிகளுக்கும் நிறம் தீட்டுங்கள்.';status.style.color=complete?'#15803d':'#b91c1c';return complete;}});
+})();</script>
     </main>
 
     <div class="relative z-50" id="interface-container"></div>

@@ -110,6 +110,101 @@
       #pg022-biggest .fm-retry.hidden { display: none !important; }
     </style></section>
 </div>
+<script>
+      (function () {
+        var section = document.getElementById('pg022-biggest');
+        if (!section || section.dataset.adtInitialized === 'true') return;
+        section.dataset.adtInitialized = 'true';
+
+        var boxes = Array.prototype.slice.call(section.querySelectorAll('.fm-box'));
+        var controllers = boxes.map(function (box) { return initBox(box); });
+
+        function initBox(box) {
+          var correctItem = box.dataset.correct;
+          var items = Array.prototype.slice.call(box.querySelectorAll('.fm-item'));
+          var retryBtn = box.querySelector('[data-retry-button]');
+          var statusEl = box.querySelector('.fm-status');
+          items.forEach(function (it) { it.classList.add('fm-mark-underline'); });
+
+          var selectedItem = null;
+
+          function selectItem(item) {
+            items.forEach(function (it) {
+              it.classList.remove('fm-selected', 'fm-correct', 'fm-wrong'); it.setAttribute('aria-pressed','false');
+              it.querySelector('.fm-feedback').className = 'fm-feedback';
+            });
+            selectedItem = item.dataset.item;
+            item.classList.add('fm-selected'); item.setAttribute('aria-pressed','true'); retryBtn.classList.add('hidden');
+            statusEl.textContent = '';
+            statusEl.className = 'fm-status';
+          }
+
+          items.forEach(function (item) {
+            item.addEventListener('click', function () { selectItem(item); });
+            item.addEventListener('keydown', function (evt) {
+              if (evt.key === 'Enter' || evt.key === ' ') {
+                evt.preventDefault();
+                selectItem(item);
+              }
+            });
+          });
+
+          function reset() {
+            selectedItem = null;
+            items.forEach(function (it) {
+              it.classList.remove('fm-selected', 'fm-correct', 'fm-wrong'); it.setAttribute('aria-pressed','false');
+              it.querySelector('.fm-feedback').className = 'fm-feedback';
+            });
+            statusEl.textContent = '';
+            statusEl.className = 'fm-status';
+            retryBtn.classList.add('hidden');
+          }
+
+          retryBtn.addEventListener('click', reset);
+
+          return {
+            box: box,
+            correctItem: correctItem,
+            isDone: function () { return !!selectedItem; },
+            isCorrect: function () { return selectedItem === correctItem; },
+            showResult: function () {
+              var chosen = items.find(function (it) { return it.dataset.item === selectedItem; });
+              if (!chosen) return;
+              var fb = chosen.querySelector('.fm-feedback');
+              if (selectedItem === correctItem) {
+                chosen.classList.add('fm-correct');
+                fb.className = 'fm-feedback show-ok';
+                fb.textContent = '✓';
+                statusEl.textContent = '✓ சரி!';
+                statusEl.className = 'fm-status ok';
+                retryBtn.classList.add('hidden');
+              } else {
+                chosen.classList.add('fm-wrong');
+                fb.className = 'fm-feedback show-err';
+                fb.textContent = '✕';
+                statusEl.textContent = '✕ தவறு. மீண்டும் முயற்சி செய்யுங்கள்.';
+                statusEl.className = 'fm-status err';
+                retryBtn.classList.remove('hidden');
+              }
+            },
+            reset: reset
+          };
+        }
+
+        window.adtRegisterCustomActivity(section, {
+          validate: function () {
+            var allDone = controllers.every(function (c) { return c.isDone(); });
+            controllers.forEach(function (c) { if (c.isDone()) c.showResult(); });
+            if (!allDone) return false;
+            var allCorrect = controllers.every(function (c) { return c.isCorrect(); });
+            return allCorrect;
+          },
+          reset: function () {
+            controllers.forEach(function (c) { c.reset(); });
+          }
+        });
+      })();
+    </script>
     </main>
 
     <script type="text/javascript">

@@ -102,6 +102,132 @@
 
   </section>
 </div>
+<script>
+      (function () {
+        var section = document.getElementById('pg013-underline-1')
+        if (!section || section.dataset.adtInitialized === 'true') return
+        section.dataset.adtInitialized = 'true'
+
+        var pairs = Array.from(section.querySelectorAll('.underline-pair'))
+        var statusId = 'text-pg013-status-1'
+        var status = section.querySelector('#' + statusId)
+        var retryButton = section.querySelector('[data-retry-button]')
+
+        function itemsOf(pair) { return Array.from(pair.querySelectorAll('.underline-item')) }
+
+        function clearPairFeedback(pair) {
+          pair.classList.remove('is-correct', 'is-wrong')
+          var icon = pair.querySelector('.activity-feedback-icon')
+          if (icon) {
+            icon.textContent = ''
+            icon.removeAttribute('aria-label')
+          }
+        }
+
+        function setPairFeedback(pair, ok) {
+          pair.classList.remove('is-correct', 'is-wrong')
+          pair.classList.add(ok ? 'is-correct' : 'is-wrong')
+          var icon = pair.querySelector('.activity-feedback-icon')
+          if (icon) {
+            icon.innerHTML = ok
+              ? '<i class="fas fa-check-circle" aria-hidden="true"></i>'
+              : '<i class="fas fa-times-circle" aria-hidden="true"></i>'
+            icon.setAttribute('aria-label', ok ? 'சரி' : 'தவறு')
+          }
+        }
+
+        pairs.forEach(function (pair) {
+          var items = itemsOf(pair)
+          var choose = function (item) {
+            items.forEach(function (other) {
+              other.classList.remove('is-selected')
+              other.setAttribute('aria-checked', 'false')
+            })
+            item.classList.add('is-selected')
+            item.setAttribute('aria-checked', 'true')
+            pair.dataset.value = item.dataset.size
+            clearPairFeedback(pair)
+          }
+          items.forEach(function (item) {
+            item.addEventListener('click', function () { choose(item) })
+            item.addEventListener('keydown', function (e) {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                choose(item)
+              }
+            })
+          })
+        })
+
+        var registerActivity = function (handlers) {
+          if (typeof window.adtRegisterCustomActivity === 'function') {
+            window.adtRegisterCustomActivity(section, handlers)
+            return
+          }
+          var attempts = 0
+          var timer = setInterval(function () {
+            attempts++
+            if (typeof window.adtRegisterCustomActivity === 'function') {
+              clearInterval(timer)
+              window.adtRegisterCustomActivity(section, handlers)
+            } else if (attempts >= 20) {
+              clearInterval(timer)
+            }
+          }, 100)
+        }
+
+        var resetActivity = function () {
+          pairs.forEach(function (pair) {
+            clearPairFeedback(pair)
+            delete pair.dataset.value
+            itemsOf(pair).forEach(function (item) {
+              item.classList.remove('is-selected')
+              item.setAttribute('aria-checked', 'false')
+            })
+          })
+          if (status) { status.textContent = ''; status.style.color = '' }
+          if (retryButton) retryButton.classList.add('hidden')
+        }
+
+        registerActivity({
+          validate: function () {
+            var anyMissing = false
+            var allCorrect = true
+            pairs.forEach(function (pair) {
+              clearPairFeedback(pair)
+              if (!pair.dataset.value) {
+                anyMissing = true
+                return
+              }
+              var ok = pair.dataset.value === pair.dataset.answer
+              setPairFeedback(pair, ok)
+              if (!ok) allCorrect = false
+            })
+            if (status) {
+              if (anyMissing) {
+                status.textContent = 'ஒவ்வொரு ஜோடியிலும் ஓர் உருவத்தைத் தெரிவு செய்யுங்கள்.'
+                status.style.color = '#b91c1c'
+              } else if (!allCorrect) {
+                status.textContent = 'மீண்டும் முயற்சி செய்யுங்கள்.'
+                status.style.color = '#b91c1c'
+              } else {
+                status.textContent = 'சரி!'
+                status.style.color = '#15803d'
+              }
+            }
+            if (retryButton) retryButton.classList.toggle('hidden', anyMissing || allCorrect)
+            return !anyMissing && allCorrect
+          },
+          reset: resetActivity,
+        })
+
+        if (retryButton) {
+          retryButton.addEventListener('click', function () {
+            resetActivity()
+          })
+        }
+      })()
+    </script>
     </main>
 
     <div class="relative z-50" id="interface-container"></div>
